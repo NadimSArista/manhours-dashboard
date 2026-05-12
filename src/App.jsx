@@ -509,7 +509,7 @@ return monthMatch && yearMatch && invoiceMatch;
                       return (
                         <tr key={task.id} style={{ background: idx % 2 === 0 ? "#fff" : "#fafaf8" }}>
                           <td style={{ ...S.td, fontWeight: 600, textAlign: "left", paddingLeft: 16 }}>
-                            <div style={{ display: "flex", alignItems: "center", gap: 8 }}><span style={{ color: "#e65100", fontSize: 10 }}>\u25cf</span>{task.name}</div>
+                            <div style={{ display: "flex", alignItems: "center", gap: 8 }}><span style={{ color: "#e65100", fontSize: 10 }}></span>{task.name}</div>
                           </td>
                           <td style={S.td}><input type="number" style={S.hoursInput} value={hours} onChange={e => updateHours(task.id, e.target.value)} placeholder="0" min="0" step="0.5" /></td>
                           <td style={S.td}><button style={S.tinyRemove} onClick={() => removeTaskFromProject(task.id)}>Delete</button></td>
