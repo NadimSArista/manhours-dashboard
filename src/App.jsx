@@ -892,7 +892,7 @@ sectionTitle: {
   background: "rgba(255,255,255,0.88)",
   backdropFilter: "blur(10px)",
 
-  border: "1px solid rgba(15, 23, 42, 0.08)",
+  border: "1px solid rgba(15, 23, 42, 0.05)",
 
   fontSize: 13,
   fontWeight: 700,
@@ -905,7 +905,7 @@ sectionTitle: {
 
   lineHeight: 1,
 
-  boxShadow: "0 4px 12px rgba(15, 23, 42, 0.05)",
+  boxShadow: "0 6px 16px rgba(15, 23, 42, 0.06)",
 },
 
   cardTitle: {
