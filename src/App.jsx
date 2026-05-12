@@ -263,7 +263,7 @@ return monthMatch && yearMatch && invoiceMatch;
       ))}
     </select>
 
-    /* Invoice Filter */
+    {/* Invoice Filter */}
 <select
   value={invoiceFilter}
   onChange={(e) => setInvoiceFilter(e.target.value)}
