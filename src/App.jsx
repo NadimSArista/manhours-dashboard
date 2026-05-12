@@ -892,7 +892,7 @@ sectionTitle: {
 
   fontSize: 16,
   fontWeight: 600,
-  color: "#94a3b8",                  // ⬅️ refined slate tone
+  color: "#020202",                  // ⬅️ refined slate tone
 
   cursor: "pointer",
 
