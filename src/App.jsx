@@ -263,6 +263,17 @@ return monthMatch && yearMatch && invoiceMatch;
       ))}
     </select>
 
+    /* Invoice Filter */
+<select
+  value={invoiceFilter}
+  onChange={(e) => setInvoiceFilter(e.target.value)}
+  style={S.invoiceFilter}
+>
+  <option value="All">All Status</option>
+  <option value="Invoiced">Invoice Created</option>
+  <option value="Not Invoiced">Not Invoiced</option>
+</select>
+
     {/* Sort Button */}
     {projects.length > 1 && (
       <button
@@ -1695,6 +1706,19 @@ monthFilter: {
 },
 
 yearFilter: {
+  padding: "7px 14px",
+  border: "1px solid rgba(0,0,0,0.08)",
+  borderRadius: 10,
+  fontSize: 13,
+  fontWeight: 500,
+  background: "rgba(255,255,255,0.75)",
+  backdropFilter: "blur(8px)",
+  cursor: "pointer",
+  color: "#0f172a",
+  outline: "none",
+  transition: "all 0.2s ease",
+},
+invoiceFilter: {
   padding: "7px 14px",
   border: "1px solid rgba(0,0,0,0.08)",
   borderRadius: 10,
