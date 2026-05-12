@@ -46,6 +46,7 @@ export default function ManhoursDashboard() {
   const [editingProject, setEditingProject] = useState(null);
   const [filterMonth, setFilterMonth] = useState("All");
   const [filterYear, setFilterYear] = useState("All");
+  const [invoiceFilter, setInvoiceFilter] = useState("All");
 
   useEffect(() => { const saved = loadData("manhours-projects-v4"); if (saved && Array.isArray(saved)) setProjects(saved); setLoaded(true); }, []);
   useEffect(() => { if (loaded) saveData("manhours-projects-v4", projects); }, [projects, loaded]);
@@ -63,10 +64,21 @@ export default function ManhoursDashboard() {
     const monthName = MONTHS[date.getMonth()];
     const year = date.getFullYear().toString();
 
-    const monthMatch = filterMonth === "All" || monthName === filterMonth;
-    const yearMatch = filterYear === "All" || year === filterYear;
+    const monthMatch =
+     filterMonth === "All" || monthName === filterMonth;
 
-    return monthMatch && yearMatch;
+    const yearMatch =
+     filterYear === "All" || year === filterYear;
+
+// 🔹 Invoice Filter
+const hasInvoice = Object.values(p.invoiced || {}).some(Boolean);
+
+const invoiceMatch =
+  invoiceFilter === "All" ||
+  (invoiceFilter === "Invoiced" && hasInvoice) ||
+  (invoiceFilter === "Not Invoiced" && !hasInvoice);
+
+return monthMatch && yearMatch && invoiceMatch;
   });
 
   // 🔹 Sorting
@@ -75,7 +87,7 @@ export default function ManhoursDashboard() {
   }
 
   return filtered;
-}, [projects, sortAlpha, filterMonth, filterYear]);
+}, [projects, sortAlpha, filterMonth, filterYear, invoiceFilter]);
 
   const addEmployee = () => { if (!newEmpName.trim()) return; setEmployees(prev => [...prev, { id: generateId(), name: newEmpName.trim(), department: newEmpDept }]); setNewEmpName(""); };
   const removeEmployee = (id) => setEmployees(prev => prev.filter(e => e.id !== id));
