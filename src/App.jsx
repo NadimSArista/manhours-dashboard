@@ -882,24 +882,32 @@ sectionTitle: {
   alignItems: "center",
   justifyContent: "center",
 
-  width: 28,
-  height: 28,
+  minWidth: 72,
+  height: 34,
 
-  borderRadius: 8,
+  padding: "0 14px",
 
-  background: "transparent",
-  border: "1px solid transparent",
+  borderRadius: 12,
 
-  fontSize: 16,
-  fontWeight: 600,
-  color: "#353232",                  // ⬅️ refined slate tone
+  background: "rgba(255,255,255,0.88)",
+  backdropFilter: "blur(10px)",
+
+  border: "1px solid rgba(15, 23, 42, 0.08)",
+
+  fontSize: 13,
+  fontWeight: 700,
+  letterSpacing: "0.2px",
+  color: "#0f172a",
 
   cursor: "pointer",
 
-  transition: "all 0.2s ease",
+  transition: "all 0.22s ease",
 
   lineHeight: 1,
+
+  boxShadow: "0 4px 12px rgba(15, 23, 42, 0.05)",
 },
+
   cardTitle: {
   fontSize: 16,
   fontWeight: 600,
