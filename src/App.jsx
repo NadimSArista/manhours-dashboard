@@ -892,7 +892,7 @@ sectionTitle: {
 
   fontSize: 16,
   fontWeight: 600,
-  color: "#020202",                  // ⬅️ refined slate tone
+  color: "#353232",                  // ⬅️ refined slate tone
 
   cursor: "pointer",
 
@@ -1609,7 +1609,7 @@ tinyRemove: {
   border: "none",
 
   fontSize: 14,
-  color: "#cbd5f5",
+  color: "#0c0c0c",
 
   cursor: "pointer",
 
