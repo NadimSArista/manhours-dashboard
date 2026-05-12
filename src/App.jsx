@@ -1605,18 +1605,21 @@ empCellRow: {
 },
 
 tinyRemove: {
-  background: "transparent",
-  border: "none",
+  background: "#ffffff",
+  border: "1px solid rgba(15, 23, 42, 0.08)",
+  borderRadius: 8,
 
-  fontSize: 14,
-  color: "#0c0c0c",
+  padding: "6px 10px",
+
+  fontSize: 12,
+  fontWeight: 600,
+  color: "#0f172a",
 
   cursor: "pointer",
 
-  padding: "2px 6px",
-  borderRadius: 6,
+  transition: "all 0.2s ease",
 
-  transition: "all 0.2s ease"
+  boxShadow: "0 2px 6px rgba(15, 23, 42, 0.05)",
 },
 
 hoursInput: {
