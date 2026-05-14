@@ -83,7 +83,9 @@ useEffect(() => {
   useEffect(() => { const saved = loadData("manhours-projects-v4"); if (saved && Array.isArray(saved)) setProjects(saved); }, []);
   useEffect(() => { if (loaded) saveData("manhours-projects-v4", projects); }, [projects, loaded]);
 
-  const activeProject = useMemo(() => projects.find(p => p.id === activeProjectId), [projects, activeProjectId]);
+  const activeProject = useMemo(() => {
+  return projects.find((p) => p.id === activeProjectId) || null;
+}, [projects, activeProjectId]);
   const daysInMonth = useMemo(() => getDaysInMonth(selectedYear, selectedMonth), [selectedYear, selectedMonth]);
   const displayedProjects = useMemo(() => {
   let filtered = [...projects];
@@ -219,7 +221,7 @@ return monthMatch && yearMatch && invoiceMatch;
     if (!activeProject) return {};
     const key = `${selectedYear}-${selectedMonth}`, md = activeProject.data?.[key] || {};
     let totalP=0,totalA=0,totalH=0,totalL=0,totalW=0;
-    activeProject.employees.forEach(emp => { const d = md[emp.id] || {}; Object.values(d).forEach(v => { if(v==="P")totalP++;if(v==="A")totalA++;if(v==="H")totalH++;if(v==="L")totalL++;if(v==="W")totalW++; }); });
+    (activeProject.employees || []).forEach(emp => { const d = md[emp.id] || {}; Object.values(d).forEach(v => { if(v==="P")totalP++;if(v==="A")totalA++;if(v==="H")totalH++;if(v==="L")totalL++;if(v==="W")totalW++; }); });
     return { totalP, totalA, totalH, totalL, totalW };
   };
 
@@ -548,7 +550,20 @@ if (!user) {
         )}
 
         {/* ─── DATA ENTRY ─── */}
-        {view === "data" && activeProject && (
+        {view === "data" && (
+  !activeProject ? (
+    <div
+      style={{
+        padding: 40,
+        textAlign: "center",
+        fontSize: 18,
+        fontWeight: 600,
+        color: "#111827"
+      }}
+    >
+      Loading project...
+    </div>
+  ) : (
           <div style={S.section}>
             <div style={S.dataHeader}>
               <div>
@@ -635,7 +650,23 @@ if (!user) {
                             <td style={{ ...S.td, ...S.stickyCol2, left: 150, fontSize: 12, color: "#6c757d" }}>{emp.department}</td>
                             {Array.from({ length: daysInMonth }, (_, i) => {
                               const val = ed[i + 1] || "", info = ATTENDANCE_TYPES[val] || ATTENDANCE_TYPES[""], we = isWeekend(selectedYear, selectedMonth, i + 1);
-                              return (<td key={i} style={{ ...S.td, ...S.dayCell, background: val ? info.bg : (we ? "#f0f0fa" : "transparent"), color: info.color, cursor: "pointer", userSelect: "none" }} onClick={() => cycleAttendance(emp.id, i + 1)} title={info.label}>{val || (we ? "\u00b7" : "\u00b7")}</td>);
+                              return (
+  <td
+    key={i}
+    style={{
+      ...S.td,
+      ...S.dayCell,
+      background: val ? (info?.bg || "#eef2ff") : (we ? "#f0f0fa" : "transparent"),
+      color: info?.color || "#64748b",
+      cursor: "pointer",
+      userSelect: "none"
+    }}
+    onClick={() => cycleAttendance(emp.id, i + 1)}
+    title={info?.label || ""}
+  >
+    {val || (we ? "\u00b7" : "\u00b7")}
+  </td>
+);
                             })}
                             <td style={{ ...S.td, ...S.countCell, color: "#2d6a4f" }}>{pC}</td>
                             <td style={{ ...S.td, ...S.countCell, color: "#9d0208" }}>{aC}</td>
@@ -715,7 +746,8 @@ if (!user) {
               </div>
             )}
           </div>
-        )}
+          )
+)}
       </main>
       <footer style={S.footer}><span>@2026 Arista Systems Pvt Ltd.</span></footer>
     </div>
