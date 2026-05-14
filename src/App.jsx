@@ -252,33 +252,129 @@ return monthMatch && yearMatch && invoiceMatch;
     </div>
   );
 }
+
 if (!user) {
   return (
     <div
       style={{
-        height: "100vh",
+        minHeight: "100vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "#f5f7fb",
+        background: `
+  radial-gradient(circle at top left, rgba(99,102,241,0.10), transparent 28%),
+  radial-gradient(circle at bottom right, rgba(59,130,246,0.08), transparent 28%),
+  linear-gradient(135deg, #f8fafc 0%, #eef2ff 45%, #f1f5f9 100%)
+`,
+        position: "relative",
+        overflow: "hidden",
+        fontFamily: "'DM Sans', sans-serif"
       }}
     >
-      <button
-        onClick={login}
+      {/* Background Glow */}
+      <div
         style={{
-          padding: "14px 28px",
-          borderRadius: 14,
-          border: "none",
-          background: "#111827",
-          color: "#fff",
-          fontSize: 16,
-          fontWeight: 600,
-          cursor: "pointer",
-          boxShadow: "0 10px 25px rgba(0,0,0,0.12)"
+          position: "absolute",
+          width: 600,
+          height: 600,
+          borderRadius: "50%",
+          background: "rgba(59,130,246,0.12)",
+          filter: "blur(140px)",
+          top: -200,
+          left: -200
         }}
+      />
+
+      {/* Login Card */}
+      <div
+        style={{
+  width: 470,
+  padding: "58px 48px",
+  borderRadius: 36,
+  background: "rgba(255,255,255,0.62)",
+  backdropFilter: "blur(28px)",
+  WebkitBackdropFilter: "blur(28px)",
+  border: "1px solid rgba(255,255,255,0.55)",
+  boxShadow: `
+  0 40px 100px rgba(15,23,42,0.10),
+  0 12px 32px rgba(15,23,42,0.06),
+  inset 0 1px 1px rgba(255,255,255,0.8)
+`,
+  textAlign: "center",
+  position: "relative",
+  zIndex: 2,
+  overflow: "hidden",
+  transition: "all 0.3s ease"
+}}
       >
-        Sign in with Arista Google Account
-      </button>
+        <img
+          src={logo}
+          alt="Arista Logo"
+          style={{
+            width: 190,
+            marginBottom: 26
+          }}
+        />
+
+<div
+  style={{
+    fontSize: 52,
+    fontWeight: 900,
+    lineHeight: 0.95,
+    letterSpacing: "-3px",
+    marginBottom: 22,
+    background: "linear-gradient(135deg, #0f172a 0%, #334155 45%, #111827 100%)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    textShadow: "0 8px 30px rgba(15,23,42,0.10)"
+  }}
+>
+  Manhours
+  <br />
+  Dashboard
+</div>
+
+        <p
+          style={{
+            color: "#3b3b44",
+            fontSize: 16,
+            lineHeight: 1.9,
+            marginBottom: 35
+          }}
+        >
+          Unified workspace for project tracking
+        </p>
+
+        <button
+          onClick={login}
+          style={{
+            width: "100%",
+            padding: "16px",
+            borderRadius: 16,
+            border: "none",
+            background: "linear-gradient(135deg, #111827 0%, #1e293b 100%)",
+            color: "#fff",
+            fontSize: 16,
+            fontWeight: 700,
+            cursor: "pointer",
+            boxShadow: "0 12px 30px rgba(15,23,42,0.20)",
+            transition: "all 0.25s ease"
+          }}
+        >
+          Continue with Arista Google Account
+        </button>
+
+        <div
+          style={{
+            marginTop: 24,
+            fontSize: 12,
+            color: "#545b64",
+            letterSpacing: "0.3px"
+          }}
+        >
+          Internal Workspace • Secure Access
+        </div>
+      </div>
     </div>
   );
 }
