@@ -14,7 +14,6 @@ const ATTENDANCE_TYPES = {
   H: { label: "Half Day", color: "#e85d04", bg: "#fff1e6" },
   L: { label: "Leave", color: "#6c757d", bg: "#e9ecef" },
   W: { label: "Week Off", color: "#5c6bc0", bg: "#e8eaf6" },
-  "": { label: "\u2014", color: "#adb5bd", bg: "transparent" },
 };
 
 const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -563,7 +562,7 @@ if (!user) {
                   <thead><tr>
                     <th style={{ ...S.th, textAlign: "left", minWidth: 200, paddingLeft: 16 }}>Employee</th>
                     <th style={{ ...S.th, textAlign: "left", minWidth: 130 }}>Department</th>
-                    <th style={{ ...S.th, minWidth: 160 }}>Hours \u2014 {MONTHS[selectedMonth].slice(0,3)} {selectedYear}</th>
+                    <th style={{ ...S.th, minWidth: 160 }}>Hours {MONTHS[selectedMonth].slice(0,3)} {selectedYear}</th>
                     <th style={{ ...S.th, width: 50 }}></th>
                   </tr></thead>
                   <tbody>
@@ -594,7 +593,7 @@ if (!user) {
                 <table style={S.table}>
                   <thead><tr>
                     <th style={{ ...S.th, textAlign: "left", minWidth: 280, paddingLeft: 16 }}>Task</th>
-                    <th style={{ ...S.th, minWidth: 160 }}>Hours \u2014 {MONTHS[selectedMonth].slice(0,3)} {selectedYear}</th>
+                    <th style={{ ...S.th, minWidth: 160 }}>Hours {MONTHS[selectedMonth].slice(0,3)} {selectedYear}</th>
                     <th style={{ ...S.th, width: 50 }}></th>
                   </tr></thead>
                   <tbody>
