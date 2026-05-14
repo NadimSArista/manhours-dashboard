@@ -1,3 +1,6 @@
+import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
+import { auth, provider } from "./firebase";
+
 import { useState, useMemo, useCallback, useEffect } from "react";
 import logo from "./assets/logo.png";
 const DEPARTMENTS = [
@@ -29,6 +32,7 @@ export default function ManhoursDashboard() {
   const [view, setView] = useState("projects");
   const [loaded, setLoaded] = useState(false);
   const [sortAlpha, setSortAlpha] = useState(false);
+  const [user, setUser] = useState(null);
 
   const [projectName, setProjectName] = useState("");
   const [projectType, setProjectType] = useState("retainer");
@@ -48,7 +52,36 @@ export default function ManhoursDashboard() {
   const [filterYear, setFilterYear] = useState("All");
   const [invoiceFilter, setInvoiceFilter] = useState("All");
 
-  useEffect(() => { const saved = loadData("manhours-projects-v4"); if (saved && Array.isArray(saved)) setProjects(saved); setLoaded(true); }, []);
+  const login = async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
+
+    if (!result.user.email.endsWith("@aristasystems.in")) {
+      alert("Only Arista Systems accounts are allowed");
+      await signOut(auth);
+      return;
+    }
+
+    setUser(result.user);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const logout = async () => {
+  await signOut(auth);
+  setUser(null);
+};
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+    setLoaded(true);
+  });
+
+  return () => unsubscribe();
+}, []);
+
+  useEffect(() => { const saved = loadData("manhours-projects-v4"); if (saved && Array.isArray(saved)) setProjects(saved); }, []);
   useEffect(() => { if (loaded) saveData("manhours-projects-v4", projects); }, [projects, loaded]);
 
   const activeProject = useMemo(() => projects.find(p => p.id === activeProjectId), [projects, activeProjectId]);
@@ -200,9 +233,56 @@ return monthMatch && yearMatch && invoiceMatch;
 
   const getItemCount = () => { if (!activeProject) return 0; return activeProject.trackBy === "tasks" ? (activeProject.tasks || []).length : activeProject.employees.length; };
 
-  if (!loaded) return (<div style={S.loadingWrap}><div style={S.loadingDot} /><p style={S.loadingText}>Loading dashboard...</p></div>);
 
   const monthKey = `${selectedYear}-${selectedMonth}`;
+  if (!loaded) {
+  return (
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "#f5f7fb",
+        fontSize: 18,
+        fontWeight: 600,
+        color: "#111827"
+      }}
+    >
+      Loading Dashboard...
+    </div>
+  );
+}
+if (!user) {
+  return (
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "#f5f7fb",
+      }}
+    >
+      <button
+        onClick={login}
+        style={{
+          padding: "14px 28px",
+          borderRadius: 14,
+          border: "none",
+          background: "#111827",
+          color: "#fff",
+          fontSize: 16,
+          fontWeight: 600,
+          cursor: "pointer",
+          boxShadow: "0 10px 25px rgba(0,0,0,0.12)"
+        }}
+      >
+        Sign in with Arista Google Account
+      </button>
+    </div>
+  );
+}
 
   return (
     <div style={S.root}>
@@ -227,6 +307,20 @@ return monthMatch && yearMatch && invoiceMatch;
           <button style={{ ...S.navBtn, ...(view === "projects" ? S.navBtnActive : {}) }} onClick={() => { setView("projects"); setEditingProject(null); }}>All Projects</button>
           {activeProject && <button style={{ ...S.navBtn, ...(view === "data" ? S.navBtnActive : {}) }} onClick={() => setView("data")}>{activeProject.name}</button>}
           <button style={{ ...S.navBtn, ...S.navBtnNew, ...(view === "setup" ? S.navBtnActive : {}) }} onClick={() => { setView("setup"); resetForm(); }}>+ New Project</button>
+          <button
+    style={{
+      padding: "10px 16px",
+      borderRadius: 12,
+      border: "none",
+      background: "#dc2626",
+      color: "#fff",
+      fontWeight: 600,
+      cursor: "pointer"
+    }}
+    onClick={logout}
+  >
+    Logout
+  </button>
         </nav>
       </header>
 
